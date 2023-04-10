@@ -1,50 +1,83 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="styles.css">
-
-    <title>Projeto</title>
+    <link rel="stylesheet" href="css/estilos.css" type="text/css">
+    <title>Projeto</title>   
 </head>
 
 <body>
-     <!-- Cabeçalho de informações do sistema -->
-    <header>
-        <div class="title">
-            <h2>Lista de Compras</h2>
+    <div id="header">
+        <h1><img alt="Puc - Rio" src="./img/logoPuc.png">MVP - Curso de Engenharia de Softwares - 2023</h1>
+        <h3>Sistema - Agendamento de servi&ccedil;os de clientes - sal&atilde;o de cabelereiro</h3>
+        <div id="nav">                
+                <a href="index.html">Home</a>
+                <a href="">Agendamento</a>
+                <a href="cliente/index.html">Cliente</a>
+                <a href="">Profissional</a>
+                <a href="">Servi&ccedil;o</a>                
         </div>
-        <div class="banner">
-            <img src="https://images.contentstack.io/v3/assets/blt45c082eaf9747747/bltbcca43584b660977/5de0b6aa703bd50385f981ad/Header-5.jpg?width=1200&height=630&fit=crop"
-                alt="y">
+    </div>
+    <div id="content">
+        <div id="feature">
+            <h2><strong>Contexto</strong></h2>
+            <p>Ao longo das aulas de Desenvolvimento Full Stack Básico a evolução da web foi nosso tema central.</p>
+            <p>Vimos que desde a publicação da primeira página web, em 1991, muita coisa evoluiu e que seu crescimento
+                exponencial logo nos primeiros anos foi a prova de seu sucesso, mas também um sinal de alerta. Como
+                vimos, esse crescimento estava limitado às condições de infraestrutura da época e, além disso, não havia
+                muita padronização na forma como as coisas eram feitas.</p>
+            <p>Como um caminho para garantir a continuidade da expansão da web, Roy Fielding propôs em 1993 que a
+                escalabilidade da web fosse governada por um conjunto de key constraints (restrições/limitações-chave).
+                Segundo ele, a continuidade da expansão da web estaria garantida se essas restrições fossem atendidas de
+                forma igualitária. Essas restrições/limitações ainda são atuais, os conceitos ainda são válidos e elas
+                devem ser observadas e atendidas no desenvolvimento de todo e qualquer sistema web.</p>
+            <p>É nesse contexto que vamos colocar em prática o conteúdo apresentado ao longo das aulas com o
+                desenvolvimento de um back-end e de um front-end, explorando algumas dessas key constraints:</p>
+            <ol>
+                <li>(I) a separação de responsabilidades entre cliente e servidor</li>
+                <li>(II) a uniformidade de interfaces</li>
+                <li>(III) o desenvolvimento de sistemas em camadas</li>
+                <li>(IV) a ausência de estados</li>
+                <li>(V) a execução de código sob demanda.</li>
+            </ol>
+
         </div>
-    </header>
-
-     <!-- Opções para adicionar um novo item -->
-    <section class="newItem">
-        <input type="text" id="newInput" placeholder="Adicionar novo item:">
-        <input type="text" id="newQuantity" placeholder="Quantidade:">
-        <input type="text" id="newPrice" placeholder="Valor:">
-        <span onclick="newItem()" class="addBtn">Adicionar</span>
-    </section>
-
-    <!-- Tabela com items existentes -->
-    <section class="items">
-        <table id="myTable">
-            <tr>
-                <th>Nome</th>
-                <th>Quantidade</th>
-                <th>Valor</th>
-                <th><img src="https://cdn-icons-png.flaticon.com/512/126/126468.png" width="15px" height="15px"></th>
-            </tr>
-        </table>
-    </section>
-
-    <script src="scripts.js"></script>
+        <div class="article column1">                       
+            <p><strong>Requisitos para o back-end e banco de dados:</strong></p>
+            <ul>
+            <li>API com, pelo menos, três rotas (por exemplo, “/cadastrar_produto”, “/buscar_produto” e
+                “/deletar_produto”), sendo que, pelo menos, uma delas deve implementar o método Post (por exemplo, na
+                rota de cadastro).</li>
+            <li>Fazer uso de um banco de dados SQLite ou PostgreSQL com, pelo menos, uma tabela (por exemplo, tabela de
+                usuários cadastrados).</li>
+            <li>Documentação da API em Swagger.</li>
+            
+            </ul>
+        </div>
+        <div class="article column2">
+            <p><strong>Requisitos de front-end </strong></p>
+            <ul>
+                <li>Desenvolvimento de uma SPA (single page application) criativa e interativa.</li>
+                <li>Que na tela sejam apresentados itens em listas (por exemplo, lista de usuários ou livros).</li>
+                <li>Que, ao longo do código, seja feita a chamada a todas as rotas implementadas pela API.</li>
+            </ul>
+        </div>
+        <div class="article column3">
+            <p><strong>Quanto à organização dos códigos</strong></p>
+            <ul>
+                <li>Devem ser criados dois projetos separados: um para a API e outro para o front-end.</li>
+                <li>Em ambos os projetos, deve existir um arquivo README.md com todas as orientações para a execução do código.</li>
+            </ul>            
+        </div>
+     
+        </div>
+        <div id="footer">
+            &copy;Copyrigth 2023</p>    
+        </div>
 </body>
 
 </html>
-
-
