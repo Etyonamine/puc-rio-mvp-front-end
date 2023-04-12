@@ -18,17 +18,18 @@
 
             <a href="../index.html">Home</a>
             <a href="">Agendamento</a>
-            <a href="index.html">Cliente</a>
+            <a href="../cliente/index.html">Cliente</a>
             <a href="../profissional/index.html">Profissional</a>
-            <a href="../servico/index.html">Servi&ccedil;o</a>
+            <a href="index.html">Servi&ccedil;o</a>
         </div>
-        <h1>Cadastro de clientes</h1>
+        <h1>Cadastro de Servi&ccedil;os</h1>
     </div>
     <div id="content">
         <div>
             <!-- Opções para adicionar um novo item -->
             <section class="newItem">
-                <input type="text" class="campoNome" id="nome" placeholder="nome:">&nbsp;
+                <input type="text" class="campoNome" id="descricao" placeholder="descricao:">&nbsp;
+                <input type="text" id="valor" placeholder="valor:">&nbsp;
                 <input type="button" id="btnSalvar" name="btnSalvar" class="addBtn" onclick="newItem()"
                     value="Adicionar" />&nbsp;
                 <input type="button" id="btnLimpar" name="btnLimpar" class="addBtn" onclick="limpar()" value="Limpar" />
@@ -39,10 +40,11 @@
         <div>
             <!-- Tabela com items existentes -->
             <section class="items">
-                <table id="tabelaCliente">
+                <table id="tabelaServico">
                     <tr>
                         <th class="id">ID</th>
-                        <th class="nome">Nome</th>
+                        <th class="descricao">Descri&ccedil;&atilde;o</th>
+                        <th class="valor">Valor</th>
                         <th class="iconeRemover"><img alt="" src="https://cdn-icons-png.flaticon.com/512/126/126468.png"
                                 width="15px" height="15px"></th>
                     </tr>
@@ -52,13 +54,13 @@
 
     </div>
     <div>
-        <input type="hidden" id="idCliente" name="idCliente" value="0">
-        <input type="hidden" id="indexTabela" name="indexTable" value="0">
+        <input type="hidden" id="idServico" name="idServico" value="0">
+        <input type="hidden" id="indexTabela" name="indexTabela" value="0">
     </div>
     <div id="footer">
         Eduardo Toshio Yonamine - &copy;Copyrigth 2023</p>
     </div>
-    <script src="../scripts/clienteJs.js"></script>
+    <script src="../scripts/servico.js"></script>
 </body>
 
 </html>
