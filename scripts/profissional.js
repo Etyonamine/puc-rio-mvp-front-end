@@ -10,6 +10,7 @@ const getList = async () => {
   //limpando a lista
 
   let url = 'http://127.0.0.1:5000/profissionais';
+  
   fetch(url, {
     method: 'get',
   })

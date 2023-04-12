@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <title>Projeto</title>
+</head>
+
+<body>
+
+    <div id="header">
+        <h1><img alt="Puc - Rio" src="../img/logoPuc.png">&nbsp; MVP - Curso de Engenharia de Softwares - 2023</h1>
+        <h2>Sistema - Agendamento de servi&ccedil;os de clientes - sal&atilde;o de cabelereiro</h2>
+        <div id="nav">
+
+            <a href="../index.html">Home</a>
+            <a href="../agendamento/index.html">Agendamento</a>
+            <a href="../cliente/index.html">Cliente</a>
+            <a href="../profissional/index.html">Profissional</a>
+            <a href="../servico/index.html">Servi&ccedil;o</a>
+        </div>
+        <h1>Cadastro de agendamentos de clientes</h1>
+    </div>
+    <div id="content">
+        <div class="container">
+
+
+            <div>
+                <label class="combos">
+                    Cliente:
+                    <select id="optCliente">
+                        <option value="0"></option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label class="combos">
+                    Profissional:
+                    <select id="optProfissional">
+                        <option value="0"></option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label class="combos">
+                    Servi&ccedil;o:
+                    <select id="optServico">
+                        <option value="0"></option>
+                    </select>
+                </label>
+            </div>
+
+            <label>Valor: <input class="campoValor" type="text" readonly value="0"></label>
+
+        </div>
+        <div>
+            <label class="combos" for="observacao">Observa&ccedil;&atilde;o:
+                <input type="text" class="combos" id="observacao" name="observacao" maxlength="300">
+            </label>
+        </div>
+        <div>
+            <input type="button" id="btnSalvar" name="btnSalvar" class="addBtn" onclick="newItem()"
+                value="Adicionar" />&nbsp;
+
+            <input type="button" id="btnLimpar" name="btnLimpar" class="addBtn" onclick="limpar()" value="Limpar" />
+        </div>
+    </div>
+    <div>
+        <!-- Tabela com items existentes -->
+        <section class="items">
+            <table id="tabelaCliente">
+                <tr>
+                    <th class="id">ID</th>
+                    <th class="nome">Nome</th>
+                    <th class="iconeRemover"><img alt="" src="https://cdn-icons-png.flaticon.com/512/126/126468.png"
+                            width="15px" height="15px"></th>
+                </tr>
+            </table>
+        </section>
+    </div>
+    </div>
+    <div>
+        <input type="hidden" id="idCliente" name="idCliente" value="0">
+        <input type="hidden" id="indexTabela" name="indexTable" value="0">
+    </div>
+    <div id="footer">
+        Eduardo Toshio Yonamine - &copy;Copyrigth 2023</p>
+    </div>
+    <script src="../scripts/agendamento.js"></script>
+</body>
+
+</html>

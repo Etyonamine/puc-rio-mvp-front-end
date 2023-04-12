@@ -2,14 +2,24 @@ body{
     width: 90%;
     margin: 0 auto;
 }
+label{
+    padding: 3px;
+}
 #header{
     text-align: center;
 }
 #content{
     overflow: auto;   
 } 
+input {
+    width: 150px;
+    font-size: large;
+}
 input + input {
     padding: 5px;
+}
+.container{
+    text-align: center;
 }
 a{
     padding: 5px;
@@ -121,14 +131,14 @@ th:nth-child(1){
 tr:hover {
     background: rgb(200, 199, 199);
 }
-
-.newItem {
-    /* background-color: rgb(225, 222, 199); */
+ 
+.newItem {    
     background-color: #efefef;
-    padding: 30px 40px;
-    color: white;
-    display: flex;
+    /* padding: 30px 40px;
+    color: white;*/
+    display: flex; 
     justify-content: center;
+    
 }
 
 .newItem:after {
@@ -140,4 +150,22 @@ tr:hover {
 .campoNome{
     width: 300px;
     font-size: medium;
+}
+.combos{
+    color: black;
+    font-size: large;
+
+}
+select{
+    width: 250px;
+    font-size: large;
+}
+textarea{
+    width: 65%;
+    text-align: left;
+}
+.campoValor{
+    width:170px;
+    color: black;
+    font-size: large;
 }

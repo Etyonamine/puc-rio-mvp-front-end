@@ -17,19 +17,21 @@
         <div id="nav">
 
             <a href="../index.html">Home</a>
-            <a href="">Agendamento</a>
+            <a href="../agendamento/index.html">Agendamento</a>
             <a href="../cliente/index.html">Cliente</a>
             <a href="../profissional/index.html">Profissional</a>
             <a href="index.html">Servi&ccedil;o</a>
         </div>
         <h1>Cadastro de Servi&ccedil;os</h1>
     </div>
+
+   
     <div id="content">
         <div>
             <!-- Opções para adicionar um novo item -->
             <section class="newItem">
                 <input type="text" class="campoNome" id="descricao" placeholder="descricao:">&nbsp;
-                <input type="text" id="valor" placeholder="valor:">&nbsp;
+                <input type="number" id="valor" min="0" max="9999,99" step="0.01"  placeholder="valor: 0,00">&nbsp;
                 <input type="button" id="btnSalvar" name="btnSalvar" class="addBtn" onclick="newItem()"
                     value="Adicionar" />&nbsp;
                 <input type="button" id="btnLimpar" name="btnLimpar" class="addBtn" onclick="limpar()" value="Limpar" />
