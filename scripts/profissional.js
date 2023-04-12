@@ -9,13 +9,13 @@ const indexSelectedRow = 0;
 const getList = async () => {
   //limpando a lista
 
-  let url = 'http://127.0.0.1:5000/clientes';
+  let url = 'http://127.0.0.1:5000/profissionais';
   fetch(url, {
     method: 'get',
   })
     .then((response) => response.json())
     .then((data) => {
-      data.clientes.forEach(item => inseriListaCliente(item.id, item.nome))
+      data.profissionais.forEach(item => inseriListaProfissional(item.id, item.nome))
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -23,7 +23,7 @@ const getList = async () => {
 }
 /*
   --------------------------------------------------------------------------------------
-  Chamada da função para preencher o campo nome e guardar o id do cliente
+  Chamada da função para preencher o campo nome e guardar o id do profissional
   --------------------------------------------------------------------------------------
 */
 function getLinha() {
@@ -36,45 +36,43 @@ function getLinha() {
     e = e || window.event;
     var target = e.srcElement || e.target;
     while (target && target.nodeName !== "TR") {
-      target = target.parentNode;
+      target = target.parentNode;      
     }
-    if (target) {
+    if (target) {      
       var cells = target.getElementsByTagName("td");
 
       for (var i = 0; i <= cells.length - 1; i++) {
         if (i == 0) //id
-        {
+        {          
           var id = cells[i].innerHTML;
-          document.getElementById("idCliente").value = id;
+          document.getElementById("idProfissional").value = id;
         }
         else if (i == 1) {
           document.getElementById("nome").value = cells[i].innerHTML;
         }
       }
-      document.getElementById("indexTabela").value = target.rowIndex;
+      document.getElementById("indexTabela").value =  target.rowIndex;      
     }
     document.getElementById("btnSalvar").value = "Atualizar";
   };
-}
+} 
 /*
-  --------------------------------------------------------------------------------------
-  recupera um registro de cliente por nome
-  --------------------------------------------------------------------------------------
+ recupera um registro de profissional por nome
 */
-function getCliente(nomeCliente)
+function getProfissional(nomeProfissional)
 /*
   --------------------------------------------------------------------------------------
-  Chamada da função para buscar os dados cliente a partir do nome
+  Chamada da função para buscar os dados profissional a partir do nome
   --------------------------------------------------------------------------------------
 */ {
-  let url = 'http://127.0.0.1:5000/cliente?nome=' + nomeCliente;
+  let url = 'http://127.0.0.1:5000/profissional?nome=' + nomeProfissional;
   let idRetorno = 0;
   fetch(url, {
     method: 'get',
   })
     .then((response) => response.json())
     .then((data) => {
-      data.clientes.forEach(item => inseriListaCliente(item.id, item.nome))
+      data.clientes.forEach(item => inseriListaProfissional(item.id, item.nome))
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -94,9 +92,9 @@ getLinha();
   Função para inserir items na lista apresentada
   --------------------------------------------------------------------------------------
 */
-const inseriListaCliente = (id, nome) => {
+const inseriListaProfissional = (id, nome) => {
   var item = [id, nome]
-  var table = document.getElementById('tabelaCliente');
+  var table = document.getElementById('tabelaProfissional');
   var row = table.insertRow();
 
   for (var i = 0; i < item.length; i++) {
@@ -107,6 +105,7 @@ const inseriListaCliente = (id, nome) => {
   document.getElementById("nome").value = "";
 
   removeElement()
+
 }
 
 
@@ -123,11 +122,10 @@ const removeElement = () => {
       let div = this.parentElement.parentElement;
       const nomeItem = div.getElementsByTagName('td')[0].innerHTML
       if (confirm("Você tem certeza?")) {
-        div.remove();
+        div.remove()
 
-        deleteItem(nomeItem);
-        alert("Removido!");
-        limpar();
+        deleteItem(nomeItem)
+        alert("Removido!")        
       }
     }
   }
@@ -152,16 +150,16 @@ const insertButton = (parent) => {
   Função para deletar um item da lista do servidor via requisição DELETE
   --------------------------------------------------------------------------------------
 */
-const deleteItem = (id) => {  
+const deleteItem = (id) => {
   
   const formData = new FormData();
   formData.append('id', id);
-  let url = 'http://127.0.0.1:5000/cliente';
+  let url = 'http://127.0.0.1:5000/profissional';
   fetch(url, {
     method: 'delete',
     body: formData
   })
-    .then(() => {
+    .then(()=>{
       limpar();
     })
     .catch((error) => {
@@ -179,7 +177,7 @@ const postItem = async (inputNome) => {
   const formData = new FormData();
   formData.append('nome', inputNome);
   let json;
-  let url = 'http://127.0.0.1:5000/cliente';
+  let url = 'http://127.0.0.1:5000/profissional';
   try {
     const response = await fetch(url, {
       method: 'post',
@@ -197,7 +195,7 @@ const postItem = async (inputNome) => {
       return Promise.reject(error);
     }
 
-    inseriListaCliente(data.id, data.nome);
+    inseriListaProfissional(data.id, data.nome);
     alert("Item adicionado!");
 
   } catch (error) {
@@ -215,12 +213,12 @@ const postItem = async (inputNome) => {
   Função para atualizar um item na lista do servidor via requisição PUT
   --------------------------------------------------------------------------------------
 */
-const putItem = async (idCliente, inputNome) => {
+const putItem = async (idProfissional, inputNome) => {
   const formData = new FormData();
-  formData.append('nome', inputNome);
-  formData.append('id', idCliente);
-  let json;
-  let url = 'http://127.0.0.1:5000/cliente';
+  formData.append('id', idProfissional);
+  formData.append('nome', inputNome);  
+  let url = 'http://127.0.0.1:5000/profissional';
+   
   try {
     const response = await fetch(url, {
       method: 'put',
@@ -241,7 +239,7 @@ const putItem = async (idCliente, inputNome) => {
     editRow();
     limpar();
     alert("Item atualizado!");
-
+    
 
 
   } catch (error) {
@@ -258,20 +256,20 @@ const putItem = async (idCliente, inputNome) => {
   Função limpa o campo nome e alterar os valores para o cenario de novo registro
   --------------------------------------------------------------------------------------
 */
-function limpar() {
+function limpar(){
   document.getElementById("nome").value = "";
-  document.getElementById("idCliente").value = "0";
+  document.getElementById("idProfissional").value = "0";
   document.getElementById("btnSalvar").value = "Adicionar";
 }
 /*
  --------------------------------------------------------------------------------------
-  Função para atualizar a linha da tabela do cliente
+  Função para atualizar a linha da tabela do profissional
   --------------------------------------------------------------------------------------
 */
 function editRow() {
-  var table = document.getElementById("tabelaCliente");
-  var rIndex = document.getElementById("indexTabela").value;
-  table.rows[rIndex].cells[1].innerHTML = document.getElementById("nome").value;
+  var table = document.getElementById("tabelaProfissional");
+  var rIndex = document.getElementById("indexTabela").value;  
+  table.rows[rIndex].cells[1].innerHTML = document.getElementById("nome").value;  
 }
 /*
   --------------------------------------------------------------------------------------
@@ -280,10 +278,10 @@ function editRow() {
 */
 const newItem = () => {
   let inputNome = document.getElementById("nome").value;
-  var idCliente = document.getElementById("idCliente").value;
+  var idProfissional = document.getElementById("idProfissional").value;
 
-  if (document.getElementById("btnSalvar").value == "Atualizar" && idCliente != "0") {
-    putItem(idCliente, inputNome);
+  if (document.getElementById("btnSalvar").value == "Atualizar" && idProfissional != "0") {
+    putItem(idProfissional, inputNome);
   }
   else {
     if (inputNome === '') {
