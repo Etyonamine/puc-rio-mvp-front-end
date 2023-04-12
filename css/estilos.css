@@ -8,16 +8,28 @@ body{
 #content{
     overflow: auto;   
 } 
+input + input {
+    padding: 5px;
+}
 a{
     padding: 5px;
 }
-#nav, #feature, #footer{    
-    margin: 1%;}
+#footer{
+    position: fixed;
+    padding: 0.5em 0;
+    bottom: 0;   
+    width: 90%;  
+    margin: 0 auto;
+    font-size: larger;
+    font-weight: bold;
+}
+ 
 .column1, .column2, .column3{    
     width: 31.3%;
     float: left;
     margin: 1%;
     font-size:medium;
+    
 }
 .column3{
     margin-right: 0%;
@@ -35,6 +47,7 @@ h1{
 #nav, #footer{
     background-color: #efefef;
     padding: 0.5em 0;
+    font-size: large;
 }
 #feature, .article{
     height: auto;
@@ -110,7 +123,8 @@ tr:hover {
 }
 
 .newItem {
-    background-color: rgb(225, 222, 199);
+    /* background-color: rgb(225, 222, 199); */
+    background-color: #efefef;
     padding: 30px 40px;
     color: white;
     display: flex;
@@ -121,4 +135,9 @@ tr:hover {
     content: "";
     display: table;
     clear: both;
+}
+
+.campoNome{
+    width: 300px;
+    font-size: medium;
 }

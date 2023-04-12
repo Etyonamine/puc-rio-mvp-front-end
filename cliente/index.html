@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/estilos.css">
-    <title>Projeto</title>    
+    <title>Projeto</title>
 </head>
 
 <body>
 
     <div id="header">
-        <h1><img alt="Puc - Rio" src="../img/logoPuc.png">MVP - Curso de Engenharia de Softwares - 2023</h1>
-        <h3>Sistema - Agendamento de servi&ccedil;os de clientes - sal&atilde;o de cabelereiro</h3>
+        <h1><img alt="Puc - Rio" src="../img/logoPuc.png">&nbsp; MVP - Curso de Engenharia de Softwares - 2023</h1>
+        <h2>Sistema - Agendamento de servi&ccedil;os de clientes - sal&atilde;o de cabelereiro</h2>
         <div id="nav">
 
             <a href="../index.html">Home</a>
@@ -25,21 +25,38 @@
         <h1>Cadastro de clientes</h1>
     </div>
     <div id="content">
-        <!-- Opções para adicionar um novo item -->
-        <section class="newItem">
-            <input type="text" id="nome" placeholder="nome:">
-            <span onclick="newItem()" class="addBtn">Adicionar</span>
-        </section>
-        <!-- Tabela com items existentes -->
-        <section class="items">
-            <table id="tabelaCliente">
-                <tr>
-                    <th class="id">ID</th>
-                    <th class="nome">Nome</th>
-                    <th class="iconeRemover"><img alt="" src="https://cdn-icons-png.flaticon.com/512/126/126468.png" width="15px" height="15px"></th>
-                </tr>
-            </table>
-        </section>
+        <div>
+            <!-- Opções para adicionar um novo item -->
+            <section class="newItem">
+                <input type="text" class="campoNome" id="nome" placeholder="nome:">&nbsp;
+                <input type="button" id="btnSalvar" name="btnSalvar" class="addBtn" onclick="newItem()"
+                    value="Adicionar" />&nbsp;
+                <input type="button" id="btnLimpar" name="btnLimpar" class="addBtn" onclick="limpar()" value="Limpar" />
+
+            </section>
+        </div>
+        <br />
+        <div>
+            <!-- Tabela com items existentes -->
+            <section class="items">
+                <table id="tabelaCliente">
+                    <tr>
+                        <th class="id">ID</th>
+                        <th class="nome">Nome</th>
+                        <th class="iconeRemover"><img alt="" src="https://cdn-icons-png.flaticon.com/512/126/126468.png"
+                                width="15px" height="15px"></th>
+                    </tr>
+                </table>
+            </section>
+        </div>
+
+    </div>
+    <div>
+        <input type="hidden" id="idCliente" name="idCliente" value="0">
+        <input type="hidden" id="indexTabela" name="indexTable" value="0">
+    </div>
+    <div id="footer">
+        Eduardo Toshio Yonamine - &copy;Copyrigth 2023</p>
     </div>
     <script src="../scripts/clienteJs.js"></script>
 </body>

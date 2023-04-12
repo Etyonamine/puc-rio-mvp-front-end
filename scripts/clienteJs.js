@@ -1,10 +1,14 @@
-
+/*
+*/
+const indexSelectedRow = 0;
 /*
   --------------------------------------------------------------------------------------
   Função para obter a lista existente do servidor via requisição GET
   --------------------------------------------------------------------------------------
 */
 const getList = async () => {
+  //limpando a lista
+
   let url = 'http://127.0.0.1:5000/clientes';
   fetch(url, {
     method: 'get',
@@ -17,7 +21,63 @@ const getList = async () => {
       console.error('Error:', error);
     });
 }
+/*
+  --------------------------------------------------------------------------------------
+  Chamada da função para preencher o campo nome e guardar o id do cliente
+  --------------------------------------------------------------------------------------
+*/
+function getLinha() {
+  document.getElementById("btnSalvar").disabled = false;
 
+  var table = document.getElementsByTagName("table")[0];
+  var tbody = table.getElementsByTagName("tbody")[0];
+
+  tbody.onclick = function (e) {
+    e = e || window.event;
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+      target = target.parentNode;      
+    }
+    if (target) {      
+      var cells = target.getElementsByTagName("td");
+
+      for (var i = 0; i <= cells.length - 1; i++) {
+        if (i == 0) //id
+        {          
+          var id = cells[i].innerHTML;
+          document.getElementById("idCliente").value = id;
+        }
+        else if (i == 1) {
+          document.getElementById("nome").value = cells[i].innerHTML;
+        }
+      }
+      document.getElementById("indexTabela").value =  target.rowIndex;      
+    }
+    document.getElementById("btnSalvar").value = "Atualizar";
+  };
+}
+/*
+ 
+*/
+function getLinha2() {
+  // get selected row
+  // display selected row data in text input
+
+  var table = document.getElementById("tabelaCliente"), rIndex;
+
+  for (var i = 0; i < table.rows.length; i++) {
+    table.rows[i].onclick = function () {
+      rIndex = this.rowIndex;
+      console.log(rIndex);
+
+      document.getElementById("idCliente").value = this.cells[0].innerHTML;
+      document.getElementById("nome").value = this.cells[1].innerHTML;
+    };
+  }
+}
+/*
+ recupera um registro de cliente por nome
+*/
 function getCliente(nomeCliente)
 /*
   --------------------------------------------------------------------------------------
@@ -26,7 +86,6 @@ function getCliente(nomeCliente)
 */ {
   let url = 'http://127.0.0.1:5000/cliente?nome=' + nomeCliente;
   let idRetorno = 0;
-  alert(url);
   fetch(url, {
     method: 'get',
   })
@@ -44,7 +103,9 @@ function getCliente(nomeCliente)
   Chamada da função para carregamento inicial dos dados
   --------------------------------------------------------------------------------------
 */
-getList()
+getList();
+getLinha();
+
 /*
   --------------------------------------------------------------------------------------
   Função para inserir items na lista apresentada
@@ -151,7 +212,7 @@ const postItem = async (inputNome) => {
     }
 
     inseriListaCliente(data.id, data.nome);
-    alert("Item adicionado!");   
+    alert("Item adicionado!");
 
   } catch (error) {
     if (error instanceof SyntaxError) {
@@ -160,25 +221,90 @@ const postItem = async (inputNome) => {
     } else {
       console.log('There was an error', error);
     }
-  }  
+  }
 }
 
+/*  
+  --------------------------------------------------------------------------------------
+  Função para atualizar um item na lista do servidor via requisição PUT
+  --------------------------------------------------------------------------------------
+*/
+const putItem = async (idCliente, inputNome) => {
+  const formData = new FormData();
+  formData.append('nome', inputNome);
+  formData.append('id', idCliente);
+  let json;
+  let url = 'http://127.0.0.1:5000/cliente';
+  try {
+    const response = await fetch(url, {
+      method: 'put',
+      body: formData
 
+    });
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson ? await response.json() : null;
+
+    // check for error response
+    if (!response.ok) {
+      // get error message from body or default to response status
+      const error = (data && data.message) || response.status;
+      alert(error);
+      return Promise.reject(error);
+    }
+
+    editRow();
+    limpar();
+    alert("Item atualizado!");
+    
+
+
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      // Unexpected token < in JSON
+      console.log('There was a SyntaxError', error);
+    } else {
+      console.log('There was an error', error);
+    }
+  }
+}
+/*
+--------------------------------------------------------------------------------------
+  Função limpa o campo nome e alterar os valores para o cenario de novo registro
+  --------------------------------------------------------------------------------------
+*/
+function limpar(){
+  document.getElementById("nome").value = "";
+  document.getElementById("idCliente").value = "0";
+  document.getElementById("btnSalvar").value = "Adicionar";
+}
+/*
+ --------------------------------------------------------------------------------------
+  Função para atualizar a linha da tabela do cliente
+  --------------------------------------------------------------------------------------
+*/
+function editRow() {
+  var table = document.getElementById("tabelaCliente");
+  var rIndex = document.getElementById("indexTabela").value;  
+  table.rows[rIndex].cells[1].innerHTML = document.getElementById("nome").value;  
+}
 /*
   --------------------------------------------------------------------------------------
   Função para adicionar um novo item com nome
   --------------------------------------------------------------------------------------
 */
 const newItem = () => {
-
   let inputNome = document.getElementById("nome").value;
+  var idCliente = document.getElementById("idCliente").value;
 
-  if (inputNome === '') {
-    alert("Escreva o nome de um item!");
+  if (document.getElementById("btnSalvar").value == "Atualizar" && idCliente != "0") {
+    putItem(idCliente, inputNome);
   }
   else {
-
-    postItem(inputNome)
-
+    if (inputNome === '') {
+      alert("Escreva o nome de um item!");
+    }
+    else {
+      postItem(inputNome)
+    }
   }
 }
