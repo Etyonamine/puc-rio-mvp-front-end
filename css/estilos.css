@@ -12,8 +12,8 @@ label{
     overflow: auto;   
 } 
 input {
-    width: 150px;
-    font-size: large;
+    width: 200px;
+     
 }
 input + input {
     padding: 5px;
@@ -32,8 +32,8 @@ a{
     margin: 0 auto;
     font-size: larger;
     font-weight: bold;
-}
- 
+} 
+
 .column1, .column2, .column3{    
     width: 31.3%;
     float: left;
@@ -101,7 +101,9 @@ h1{
     width: 5%;
     text-align: center;
 }
-
+.dataHora {
+    font-size: larg;
+}
 table,
 th,
 td {
@@ -119,6 +121,10 @@ table{
     background-color: white;
     width: 50%;
 }
+.tableAgendamento{
+    background-color: white;
+    width: 90%;
+}
 
 tr:nth-child(odd){
     background-color: #eee;
@@ -130,8 +136,8 @@ th:nth-child(1){
 
 tr:hover {
     background: rgb(200, 199, 199);
-}
- 
+} 
+
 .newItem {    
     background-color: #efefef;
     /* padding: 30px 40px;
@@ -152,9 +158,8 @@ tr:hover {
     font-size: medium;
 }
 .combos{
-    color: black;
-    font-size: large;
-
+    color: black;    
+    width: 200px;
 }
 select{
     width: 250px;
@@ -165,7 +170,11 @@ textarea{
     text-align: left;
 }
 .campoValor{
-    width:170px;
+    width:100px;
     color: black;
-    font-size: large;
+    font-size: medium;
+    text-align: right;
+}
+.observacao{
+    width: 75%;
 }

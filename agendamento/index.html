@@ -26,55 +26,60 @@
     </div>
     <div id="content">
         <div class="container">
-
-
-            <div>
-                <label class="combos">
-                    Cliente:
-                    <select id="optCliente">
-                        <option value="0"></option>
-                    </select>
-                </label>
-            </div>
-            <div>
-                <label class="combos">
-                    Profissional:
-                    <select id="optProfissional">
-                        <option value="0"></option>
-                    </select>
-                </label>
-            </div>
-            <div>
-                <label class="combos">
-                    Servi&ccedil;o:
-                    <select id="optServico">
-                        <option value="0"></option>
-                    </select>
-                </label>
-            </div>
-
-            <label>Valor: <input class="campoValor" type="text" readonly value="0"></label>
-
-        </div>
-        <div>
-            <label class="combos" for="observacao">Observa&ccedil;&atilde;o:
-                <input type="text" class="combos" id="observacao" name="observacao" maxlength="300">
+            <label class="dataHora">
+                Data/Hora: <input type="datetime-local" id="data">
             </label>
+
+            <label class="combos">
+                Cliente:
+                <select id="optCliente">
+                    <option value="0"></option>
+                </select>
+            </label>
+
+            <label class="combos">
+                Profissional:
+                <select id="optProfissional">
+                    <option value="0"></option>
+                </select>
+            </label>
+
+            <label class="combos">
+                Servi&ccedil;o:
+                <select id="optServico" onchange="getValorServico(this)">
+                    <option value="0"></option>
+                </select>
+            </label>
+
+            <label>Valor: <input id="valor" name = "valor" class="campoValor" type="text" readonly value="0"></label>
+
         </div>
-        <div>
+        <br />
+        <div class="container">
+            <label  for="observacao">Observa&ccedil;&atilde;o:
+                <textarea class="observacao" id="observacao" name="observacao" maxlength="300"></textarea>
+            </label>            
+        </div>
+        <br />
+        <div class="container"> 
             <input type="button" id="btnSalvar" name="btnSalvar" class="addBtn" onclick="newItem()"
                 value="Adicionar" />&nbsp;
 
             <input type="button" id="btnLimpar" name="btnLimpar" class="addBtn" onclick="limpar()" value="Limpar" />
         </div>
     </div>
+    <br />
     <div>
         <!-- Tabela com items existentes -->
         <section class="items">
-            <table id="tabelaCliente">
+            <table class = "tableAgendamento" id="tabelaCliente">
                 <tr>
                     <th class="id">ID</th>
-                    <th class="nome">Nome</th>
+                    <th class="data">Data/Hora</th>
+                    <th class="nomeCliente">Cliente</th>
+                    <th class="nomeProfissional">Profissional</th>
+                    <th class="descricaoServico">Servi&ccedil;o</th>
+                    <th class="valorServico">Valor</th>
                     <th class="iconeRemover"><img alt="" src="https://cdn-icons-png.flaticon.com/512/126/126468.png"
                             width="15px" height="15px"></th>
                 </tr>
