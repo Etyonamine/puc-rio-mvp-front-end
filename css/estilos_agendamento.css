@@ -1,0 +1,24 @@
+.colunaId {
+    width: 3%;
+    text-align: center;
+}
+.colunaDataHora{
+    width: 12%;
+    text-align: center;
+}
+.colunaNome{
+    width: 15%;
+    text-align: center;
+}
+.colunaDescricaoServico{
+    width: 20%;
+    text-align: center;
+}
+.colunaValor{
+    width: 5%;
+    text-align: center;
+}
+.colunaObservacao {
+    width: 30%;
+    text-align: center;
+}

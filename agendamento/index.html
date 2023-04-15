@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/estilos_agendamento.css">
     <title>Projeto</title>
 </head>
 
@@ -27,26 +28,26 @@
     <div id="content">
         <div class="container">
             <label class="dataHora">
-                Data/Hora: <input type="datetime-local" id="data">
+                Data/Hora: <input type="datetime-local" id="data" required>
             </label>
 
             <label class="combos">
                 Cliente:
-                <select id="optCliente">
+                <select id="optCliente" required>
                     <option value="0"></option>
                 </select>
             </label>
 
             <label class="combos">
                 Profissional:
-                <select id="optProfissional">
+                <select id="optProfissional" required>
                     <option value="0"></option>
                 </select>
             </label>
 
             <label class="combos">
                 Servi&ccedil;o:
-                <select id="optServico" onchange="getValorServico(this)">
+                <select id="optServico" onchange="getValorServico(this)" required>
                     <option value="0"></option>
                 </select>
             </label>
@@ -72,14 +73,15 @@
     <div>
         <!-- Tabela com items existentes -->
         <section class="items">
-            <table class = "tableAgendamento" id="tabelaCliente">
-                <tr>
-                    <th class="id">ID</th>
-                    <th class="data">Data/Hora</th>
-                    <th class="nomeCliente">Cliente</th>
-                    <th class="nomeProfissional">Profissional</th>
-                    <th class="descricaoServico">Servi&ccedil;o</th>
-                    <th class="valorServico">Valor</th>
+            <table class = "tableAgendamento" id="tabelaAgendamento">
+                <tr>                 
+                    <th class="colunaId">ID</th>
+                    <th class="colunaDataHora">Data/Hora</th>
+                    <th class="colunaNome">Cliente</th>
+                    <th class="colunaNome">Profissional</th>
+                    <th class="colunaDescricaoServico">Servi&ccedil;o</th>
+                    <th class="colunaValor">Valor</th>
+                    <th class="colunaObservacao">Observa&ccedil;&atilde;o</th>
                     <th class="iconeRemover"><img alt="" src="https://cdn-icons-png.flaticon.com/512/126/126468.png"
                             width="15px" height="15px"></th>
                 </tr>
@@ -88,9 +90,10 @@
     </div>
     </div>
     <div>
-        <input type="hidden" id="idCliente" name="idCliente" value="0">
+        <input type="hidden" id="idAgendamento" name="idAgendamento" value="0">
         <input type="hidden" id="indexTabela" name="indexTable" value="0">
     </div>
+
     <div id="footer">
         Eduardo Toshio Yonamine - &copy;Copyrigth 2023</p>
     </div>
