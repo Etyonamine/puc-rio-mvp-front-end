@@ -75,7 +75,12 @@ const getList = async () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      data.agendamentos.forEach(item => inseriListaAgendamento(data))
+      var i = 0 ;      
+      data.agendamentos.forEach(item => {
+
+        inseriListaAgendamento(data.agendamentos[i]);
+        i++;
+      })
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -114,15 +119,23 @@ function getLinha() {
           var celula = cells[i].innerHTML;
           const [dateStr, timeStr] = celula.split(' ');
           const [day,month, year] = dateStr.split('/');          
-          var dataAgenda = year + '-' + month + '-' + day + 'T' + timeStr;
-
-          alert(dataAgenda.toString("yyyy-MM-ddThh:mm"))
+          var dataAgenda = year + '-' + month + '-' + day + 'T' + timeStr;          
           document.getElementById("data").value = dataAgenda;
         }
         else if(i == 2){
           var nomeCliente = cells[i].innerHTML;
-          var idCliente = getIdCliente(nomeCliente);
-          document.getElementById("optCliente").value = idCliente;
+          getIdCliente(nomeCliente);          
+        }
+        else if(i == 3){
+          var nomeProfissional = cells[i].innerHTML;
+          getIdProfissional(nomeProfissional);          
+        }
+        else if(i == 4){
+          var descricaoServico = cells[i].innerHTML;
+          getIdServico(descricaoServico);          
+        }
+        else if(i ==5){
+          document.getElementById("observacao").value = cells[i].innerHTML;
         }
       }
       document.getElementById("indexTabela").value = target.rowIndex;
@@ -130,6 +143,7 @@ function getLinha() {
     document.getElementById("btnSalvar").value = "Atualizar";
   };
 }
+
 
 /*
   --------------------------------------------------------------------------------------
@@ -144,7 +158,52 @@ const getIdCliente = (nome)=>{
   })
     .then((response) => response.json())
     .then((data) => {
-      data.forEach(item => inseriListaCliente(item.id, item.nome))
+      document.getElementById("optCliente").value = data.id;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  return idRetorno;
+}
+
+
+/*
+  --------------------------------------------------------------------------------------
+  Função para recuperar o ID do profissional
+  --------------------------------------------------------------------------------------
+*/
+const getIdProfissional = (nome)=>{
+  let url = 'http://127.0.0.1:5000/profissional?nome=' + nome;
+  let idRetorno = 0;
+  fetch(url, {
+    method: 'get',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("optProfissional").value = data.id;
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  return idRetorno;
+}
+
+
+/*
+  --------------------------------------------------------------------------------------
+  Função para recuperar o ID do cliente
+  --------------------------------------------------------------------------------------
+*/
+const getIdServico = (descricao)=>{
+  let url = 'http://127.0.0.1:5000/servico?descricao=' + descricao;
+  let idRetorno = 0;
+  fetch(url, {
+    method: 'get',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById("optServico").value = data.id;
+      document.getElementById("valor").value = data.valor;
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -161,13 +220,13 @@ const inseriListaAgendamento = (data) => {
   
 
   //recuperando informações do array
-  var id = data.agendamentos[0].agenda_id;
-  var dataAgenda = new Date(data.agendamentos[0].data_agenda);
-  var nomeCliente = data.agendamentos[0].cliente;
-  var nomeProfissional = data.agendamentos[0].profissional;
-  var descricaoServico = data.agendamentos[0].descricao_servico;
-  var valorServico = data.agendamentos[0].valor_servico;
-  var observacao = data.agendamentos[0].observacao;
+  var id = data.agenda_id;
+  var dataAgenda = new Date(data.data_agenda);
+  var nomeCliente = data.cliente;
+  var nomeProfissional = data.profissional;
+  var descricaoServico = data.descricao_servico;
+  var valorServico = data.valor_servico;
+  var observacao = data.observacao;
 
   var item = [id, dataAgenda.toLocaleString().replace(',',''),nomeCliente, nomeProfissional, descricaoServico, valorServico, observacao]
   var table = document.getElementById('tabelaAgendamento');
@@ -178,7 +237,7 @@ const inseriListaAgendamento = (data) => {
     cel.textContent = item[i];
   }
   insertButton(row.insertCell(-1))
-  //document.getElementById("nome").value = "";
+
 
   removeElement()
 }
@@ -206,20 +265,19 @@ const insertButton = (parent) => {
 */
 const removeElement = () => {
   let close = document.getElementsByClassName("close");
-  let i;
+  let i;    
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
       let div = this.parentElement.parentElement;
-      const nomeItem = div.getElementsByTagName('td')[0].innerHTML
+      const idAgendamento = div.getElementsByTagName('td')[0].innerHTML
       if (confirm("Você tem certeza?")) {
         div.remove();
-
-        deleteItem(nomeItem);
-        alert("Removido!");
-        limpar();
+        deleteItem(idAgendamento);      
+                     
       }
     }
-  }
+  }  
+  document.getElementById('btnLimpar').click();
 }
 
 
@@ -230,12 +288,12 @@ const removeElement = () => {
 */
 function limpar() {
   document.getElementById("data").value = "";
-  document.getElementById("optCliente").value = "0";
-  document.getElementById("optProfissional").value = "0";
-  document.getElementById("optServico").value = "0";
+  document.getElementById("optCliente").value = 0;
+  document.getElementById("optProfissional").value = 0;
+  document.getElementById("optServico").value = 0;
   document.getElementById("valor").value = "0";
   document.getElementById("observacao").value = "";  
-  document.getElementById("btnSalvar").value = "Adicionar";
+  document.getElementById("btnSalvar").value = "Adicionar";  
 }
 /*
 
@@ -322,7 +380,7 @@ getListaClientes();
 getListaProfissionais();
 getListaServicos();
 getList();
-getLinha();
+
 
 
 /*
@@ -365,8 +423,9 @@ const postItem = async () => {
       return Promise.reject(error);
     }
 
-    inseriListaCliente(data.id, data.nome);
+    inseriListaAgendamento(data);
     alert("Item adicionado!");
+    limpar();
 
   } catch (error) {
     if (error instanceof SyntaxError) {
@@ -430,5 +489,41 @@ const newItem = () => {
       postItem();
       
     }
+  }  
+}
+
+/*
+  --------------------------------------------------------------------------------------
+  Função para deletar um item da lista do servidor via requisição DELETE
+  --------------------------------------------------------------------------------------
+*/
+const deleteItem = (id) => {  
+  
+  const formData = new FormData();
+  formData.append('id', id);
+  let url = 'http://127.0.0.1:5000/agendamento';
+  try{
+    const response = await fetch(url, {
+      method: 'delete',
+      body: formData
+    });
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson ? await response.json() : null;
+
+    // check for error response
+    if (!response.ok) {
+      // get error message from body or default to response status
+      const error = (data && data.message) || response.status;
+      alert(error);
+      return Promise.reject(error);
+    }
+    alert("Removido!");  
+  }catch{
+    if (error instanceof SyntaxError) {
+          // Unexpected token < in JSON
+          console.log('There was a SyntaxError', error);
+        } else {
+          console.log('There was an error', error);
+        }
   }  
 }

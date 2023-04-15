@@ -121,13 +121,12 @@ const removeElement = () => {
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
       let div = this.parentElement.parentElement;
-      const nomeItem = div.getElementsByTagName('td')[0].innerHTML
+      const id = div.getElementsByTagName('td')[0].innerHTML
       if (confirm("Você tem certeza?")) {
         div.remove();
 
-        deleteItem(nomeItem);
-        alert("Removido!");
-        limpar();
+        deleteItem(id);
+       
       }
     }
   }
@@ -152,21 +151,40 @@ const insertButton = (parent) => {
   Função para deletar um item da lista do servidor via requisição DELETE
   --------------------------------------------------------------------------------------
 */
-const deleteItem = (id) => {  
+const deleteItem = async (id) => {  
   
   const formData = new FormData();
   formData.append('id', id);
   let url = 'http://127.0.0.1:5000/cliente';
-  fetch(url, {
-    method: 'delete',
-    body: formData
-  })
-    .then(() => {
-      limpar();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
+  try{
+    const response = await fetch(url, {
+      method: 'delete',
+      body: formData
+
     });
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson ? await response.json() : null;
+
+    // check for error response
+    if (!response.ok) {
+      // get error message from body or default to response status
+      /* const error = (data && data.message) || response.status;       */
+      const error = response.text();
+      return Promise.reject(error);
+    }else{
+      alert("Removido!");
+      limpar(); 
+    }     
+  }
+  catch{
+    if (error instanceof SyntaxError) {
+      // Unexpected token < in JSON
+      console.log('There was a SyntaxError', error);
+    } else {
+      console.log('There was an error', error);
+    }
+  }
+  
 }
 
 

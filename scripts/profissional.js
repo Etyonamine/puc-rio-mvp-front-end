@@ -130,6 +130,8 @@ const removeElement = () => {
       }
     }
   }
+
+  limpar();
 }
 
 /*
