@@ -67,8 +67,6 @@ const getListaServicos = async () => {
   --------------------------------------------------------------------------------------
 */
 const getList = async () => {
-  //limpando a lista
-
   let url = 'http://127.0.0.1:5000/agendamentos';
   fetch(url, {
     method: 'get',
@@ -211,6 +209,7 @@ const getIdServico = (descricao)=>{
   return idRetorno;
 }
 
+
 /*
   --------------------------------------------------------------------------------------
   Função para inserir items na lista de agendamentos apresentada
@@ -257,7 +256,6 @@ const insertButton = (parent) => {
 }
 
 
-
 /*
   --------------------------------------------------------------------------------------
   Função para remover um item da lista de acordo com o click no botão close
@@ -291,11 +289,12 @@ function limpar() {
   document.getElementById("optCliente").value = 0;
   document.getElementById("optProfissional").value = 0;
   document.getElementById("optServico").value = 0;
-  document.getElementById("valor").value = "0";
+  document.getElementById("valor").value = 0;
   document.getElementById("observacao").value = "";  
   document.getElementById("btnSalvar").value = "Adicionar";  
+  document.getElementById('optCliente').disabled  = false;
+  document.getElementById('data').disabled = false;
 }
-/*
 
 
 /*
@@ -308,6 +307,8 @@ const inseriListaCliente = (id, nome) => {
   const select = document.querySelector('#optCliente');
   select.options[select.options.length] = new Option(nome, id);
 };
+
+
 /*
   --------------------------------------------------------------------------------------
   montando o combo profissional
@@ -318,6 +319,8 @@ const inseriListaProfissional = (id, nome) => {
   const select = document.querySelector('#optProfissional');
   select.options[select.options.length] = new Option(nome, id);
 };
+
+
 /*
   --------------------------------------------------------------------------------------
   montando o combo serviço
@@ -328,6 +331,8 @@ const inseriListaServico = (id, descricao) => {
   const select = document.querySelector('#optServico');
   select.options[select.options.length] = new Option(descricao, id);
 };
+
+
 /*
   --------------------------------------------------------------------------------------
   Função para contar a quantidade de caracteres restantes do campo observacao
@@ -340,6 +345,8 @@ const contarCaracteresTextArea = () => {
     caracteresRestantes.innerHTML = (100 - this.value.length);
   }
 }
+
+
 /*
   --------------------------------------------------------------------------------------
   busca o valor do servico
@@ -371,6 +378,80 @@ const getValorServico = (id)=>{
    });
 }
 
+
+/*
+  --------------------------------------------------------------------------------------
+  Chamada da função para preencher o campo nome e guardar o id do cliente
+  --------------------------------------------------------------------------------------
+*/
+function getLinha() {
+  document.getElementById("btnSalvar").disabled = false;
+
+  var table = document.getElementsByTagName("table")[0];
+  var tbody = table.getElementsByTagName("tbody")[0];
+
+  tbody.onclick = function (e) {
+    e = e || window.event;
+    var target = e.srcElement || e.target;
+    while (target && target.nodeName !== "TR") {
+      target = target.parentNode;
+    }
+    if (target) {
+      var cells = target.getElementsByTagName("td");
+      var id = 0 ;
+      for (var i = 0; i <= cells.length - 1; i++) {
+        if (i == 0) //id
+        {
+          id = cells[i].innerHTML;
+          document.getElementById("idAgendamento").value = id;
+        }        
+      }
+      document.getElementById("indexTabela").value = target.rowIndex;
+      getAgendamento(id);
+    }
+    document.getElementById("btnSalvar").value = "Atualizar";
+  };
+}
+
+function convertFormatoData(dataAgenda){  
+  var info = dataAgenda.split(" ");
+  var data = info[0].split('/');
+  var horas = info[1].split(':');
+  var dataRetorno = data[2] + '-' + data[1] + '-' + data[0] + 'T' + horas[0] + ":" + horas[1];  
+  console.log(dataRetorno);
+  return dataRetorno;
+}
+
+/*
+  Funcao para recuperar o agendamento  e atualizar os campos
+*/
+const getAgendamento = (id) =>{
+  let url = 'http://127.0.0.1:5000/agendamento_id?id=' + id;
+  fetch(url, {
+    method: 'get',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data)  {    
+        let dataenc = new Date(data.data_agenda);
+        let dataAgendaFmt = convertFormatoData(dataenc.toLocaleString().replace(',',''));
+        document.getElementById('data').value = dataAgendaFmt;
+        document.getElementById('optCliente').value = data.cliente_id;
+        document.getElementById('optProfissional').value = data.profissional_id;
+        document.getElementById('optServico').value = data.servico_id;
+        document.getElementById('valor').value = data.valor_servico;
+        document.getElementById('observacao').value = data.observacao;
+
+        document.getElementById('optCliente').disabled  = true;
+        document.getElementById('data').disabled = true;
+      }      
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
+
 /*
   --------------------------------------------------------------------------------------
   Iniciando as variaveis
@@ -380,7 +461,7 @@ getListaClientes();
 getListaProfissionais();
 getListaServicos();
 getList();
-
+getLinha();
 
 
 /*
@@ -470,6 +551,7 @@ function preenchimentoCamposObrigatoriosValido(){
   return true;
 }
 
+
 /*
   --------------------------------------------------------------------------------------
   Função para adicionar um novo item 
@@ -491,6 +573,7 @@ const newItem = () => {
     }
   }  
 }
+
 
 /*
   --------------------------------------------------------------------------------------
@@ -518,6 +601,7 @@ const deleteItem = async (id) => {
       return Promise.reject(error);
     }
     alert("Removido!");  
+    limpar();
   }catch{
     if (error instanceof SyntaxError) {
           // Unexpected token < in JSON

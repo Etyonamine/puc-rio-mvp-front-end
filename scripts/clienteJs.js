@@ -1,7 +1,4 @@
 /*
-*/
-const indexSelectedRow = 0;
-/*
   --------------------------------------------------------------------------------------
   Função para obter a lista existente do servidor via requisição GET
   --------------------------------------------------------------------------------------
@@ -21,6 +18,8 @@ const getList = async () => {
       console.error('Error:', error);
     });
 }
+
+
 /*
   --------------------------------------------------------------------------------------
   Chamada da função para preencher o campo nome e guardar o id do cliente
@@ -56,6 +55,8 @@ function getLinha() {
     document.getElementById("btnSalvar").value = "Atualizar";
   };
 }
+
+
 /*
   --------------------------------------------------------------------------------------
   recupera um registro de cliente por nome
@@ -81,6 +82,8 @@ function getCliente(nomeCliente)
     });
   return idRetorno;
 }
+
+
 /*
   --------------------------------------------------------------------------------------  
   Chamada da função para consultar se existe agendamento com o codigo do cliente
@@ -167,6 +170,7 @@ const removeElement = () => {
     }
   }
 }
+
 
 /*
   --------------------------------------------------------------------------------------
@@ -261,6 +265,8 @@ const excluirRegistro = (id, div) => {
       alert(messagemErroGeral);
     });
 }
+
+
 /*
   --------------------------------------------------------------------------------------
   Função para colocar um item na lista do servidor via requisição POST
@@ -300,6 +306,7 @@ const postItem = async (inputNome) => {
     }
   }
 }
+
 
 /*  
   --------------------------------------------------------------------------------------
@@ -344,6 +351,8 @@ const putItem = async (idCliente, inputNome) => {
     }
   }
 }
+
+
 /*
 --------------------------------------------------------------------------------------
   Função limpa o campo nome e alterar os valores para o cenario de novo registro
@@ -354,6 +363,8 @@ function limpar() {
   document.getElementById("idCliente").value = "0";
   document.getElementById("btnSalvar").value = "Adicionar";
 }
+
+
 /*
  --------------------------------------------------------------------------------------
   Função para atualizar a linha da tabela do cliente
@@ -364,6 +375,8 @@ function editRow() {
   var rIndex = document.getElementById("indexTabela").value;
   table.rows[rIndex].cells[1].innerHTML = document.getElementById("nome").value;
 }
+
+
 /*
   --------------------------------------------------------------------------------------
   Função para adicionar um novo item com nome
