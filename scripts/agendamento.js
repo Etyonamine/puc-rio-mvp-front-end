@@ -418,7 +418,7 @@ function convertFormatoData(dataAgenda){
   var data = info[0].split('/');
   var horas = info[1].split(':');
   var dataRetorno = data[2] + '-' + data[1] + '-' + data[0] + 'T' + horas[0] + ":" + horas[1];  
-  console.log(dataRetorno);
+  
   return dataRetorno;
 }
 
@@ -519,6 +519,87 @@ const postItem = async () => {
 }
 
 
+/*  
+  --------------------------------------------------------------------------------------
+  Função para atualizar um item na lista do servidor via requisição PUT
+  --------------------------------------------------------------------------------------
+*/
+const putItem = async () => {
+  //captura das informacoes
+  var id = document.getElementById('idAgendamento').value;
+  var data = new Date(document.getElementById("data").value);
+  var idCliente = document.getElementById("optCliente").value;
+  var idProfissional = document.getElementById("optProfissional").value;
+  var idServico = document.getElementById("optServico").value;  
+  var observacao = document.getElementById("observacao").value;
+  var dataLocal = data.toLocaleDateString().split('/');
+  var horaLocal = data.toLocaleTimeString();
+  console.log(dataLocal);
+  console.log(horaLocal);
+  const formData = new FormData();
+  formData.append('id', id);
+  formData.append('data_agenda', dataLocal[2] + '-' + dataLocal[1] + '-' + dataLocal[0]   + ' ' + horaLocal);
+  formData.append('cliente_id', idCliente);
+  formData.append('profissional_id', idProfissional);
+  formData.append('servico_id', idServico);
+  formData.append('observacao', observacao);
+
+  let json;
+  let url = 'http://127.0.0.1:5000/agendamento';
+  try {
+    const response = await fetch(url, {
+      method: 'put',
+      body: formData
+
+    });
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+    const data = isJson ? await response.json() : null;
+
+    // check for error response
+    if (!response.ok) {
+      // get error message from body or default to response status
+      const error = (data && data.message) || response.status;
+      alert(error);
+      return Promise.reject(error);
+    }
+
+    editRow();
+    limpar();
+    alert("Item atualizado!");
+
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      // Unexpected token < in JSON
+      console.log('There was a SyntaxError', error);
+    } else {
+      console.log('There was an error', error);
+    }
+  }
+}
+
+
+
+/*
+ --------------------------------------------------------------------------------------
+  Função para atualizar a linha da tabela do agendamento
+  --------------------------------------------------------------------------------------
+*/
+function editRow() {
+  var table = document.getElementById("tabelaAgendamento");
+  var rIndex = document.getElementById("indexTabela").value;
+
+  var nomeCliente = document.getElementById('optCliente').options[document.getElementById('optCliente').selectedIndex].text;
+  var nomeProfissional = document.getElementById('optProfissional').options[document.getElementById('optProfissional').selectedIndex].text;
+  var nomeServico = document.getElementById('optServico').options[document.getElementById('optServico').selectedIndex].text;
+
+  table.rows[rIndex].cells[2].innerHTML = nomeCliente;
+  table.rows[rIndex].cells[3].innerHTML = nomeProfissional;
+  table.rows[rIndex].cells[4].innerHTML = nomeServico;
+  table.rows[rIndex].cells[5].innerHTML = document.getElementById('valor').value;
+  table.rows[rIndex].cells[6].innerHTML = document.getElementById('observacao').value;
+}
+
+
 /*
  --------------------------------------------------------------------------------------
   Função para a validação do preenchimento 
@@ -557,13 +638,13 @@ function preenchimentoCamposObrigatoriosValido(){
   Função para adicionar um novo item 
   --------------------------------------------------------------------------------------
 */
-const newItem = () => {
+const salvarItem = () => {
   // consistencia   
   if (preenchimentoCamposObrigatoriosValido() == true){
     //identificando a operação
     // atualizacao do registro
-    if (document.getElementById("btnSalvar").value == "Atualizar" && idCliente != "0") {
-      putItem(idCliente, inputNome);
+    if (document.getElementById("btnSalvar").value == "Atualizar") {
+      putItem();
     }
     // novo registro
     else 

@@ -317,7 +317,7 @@ function editRow() {
   Função para adicionar um novo item com nome
   --------------------------------------------------------------------------------------
 */
-const newItem = () => {
+const salvarItem = () => {
   let inputNome = document.getElementById("nome").value;
   var idProfissional = document.getElementById("idProfissional").value;
 

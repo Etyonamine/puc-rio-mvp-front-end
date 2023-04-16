@@ -332,7 +332,7 @@ function editRow() {
   Função para adicionar um novo item com descricao
   --------------------------------------------------------------------------------------
 */
-const newItem = () => {
+const salvarItem = () => {
   let inputDescricao = document.getElementById("descricao").value;
   var idServico = document.getElementById("idServico").value;
   var valor = document.getElementById("valor").value;
