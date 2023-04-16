@@ -110,6 +110,24 @@ const inseriListaProfissional = (id, nome) => {
 }
 
 
+const excluirRegistro = async (id, div) => {
+  const formData = new FormData();
+  formData.append('id', id);
+  let url = 'http://127.0.0.1:5000/profissional';
+  fetch(url, {
+    method: 'delete',
+    body: formData
+  })
+    .then(()=>{
+      alert('Removido com sucesso!');      
+      limpar();
+      div.remove();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+
 /*
   --------------------------------------------------------------------------------------
   Função para remover um item da lista de acordo com o click no botão close
@@ -121,17 +139,12 @@ const removeElement = () => {
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
       let div = this.parentElement.parentElement;
-      const nomeItem = div.getElementsByTagName('td')[0].innerHTML
+      const id = div.getElementsByTagName('td')[0].innerHTML
       if (confirm("Você tem certeza?")) {
-        div.remove()
-
-        deleteItem(nomeItem)
-        alert("Removido!")        
+        deleteItem(id, div);        
       }
     }
-  }
-
-  limpar();
+  }  
 }
 
 /*
@@ -153,21 +166,46 @@ const insertButton = (parent) => {
   Função para deletar um item da lista do servidor via requisição DELETE
   --------------------------------------------------------------------------------------
 */
-const deleteItem = (id) => {
-  
-  const formData = new FormData();
-  formData.append('id', id);
-  let url = 'http://127.0.0.1:5000/profissional';
-  fetch(url, {
-    method: 'delete',
-    body: formData
-  })
-    .then(()=>{
-      limpar();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+const deleteItem = (id, div) => {
+  try {
+    
+    let messagemErroGeral = "Ocorreu um erro ao tentar excluir o profissional!";
+
+    try {
+      let url = 'http://127.0.0.1:5000/agendamento_profissional?profissional_id=' + id;
+      const response = fetch(url, {
+        method: 'get'
+      }).then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        else
+        {
+          throw new Error(messagemErroGeral);
+        }
+      })
+        .then((responseJson) => {
+          // Do something with the response
+          alert('Já existe agendamento com este profissional!');          
+        })
+        .catch((error) => {
+          excluirRegistro(id, div);
+        });
+    }
+    catch (error) {
+      
+        console.log('There was a SyntaxError', error);
+        alert(messagemErroGeral);
+    }
+
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      // Unexpected token < in JSON
+      console.log('There was a SyntaxError', error);
+    } else {
+      console.log('There was an error', error);
+    }
+  }  
 }
 
 

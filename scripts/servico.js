@@ -123,12 +123,9 @@ const removeElement = () => {
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
       let div = this.parentElement.parentElement;
-      const nomeItem = div.getElementsByTagName('td')[0].innerHTML
+      const id = div.getElementsByTagName('td')[0].innerHTML
       if (confirm("Você tem certeza?")) {
-        div.remove()
-
-        deleteItem(nomeItem)
-        alert("Removido!")        
+        deleteItem(id,div)        
       }
     }
   }
@@ -150,11 +147,59 @@ const insertButton = (parent) => {
 
 /*
   --------------------------------------------------------------------------------------
-  Função para deletar um item da lista do servidor via requisição DELETE
+  Função para tentar excluir o item  da lista
   --------------------------------------------------------------------------------------
 */
-const deleteItem = (id) => {
-  
+const deleteItem = (id, div) => {
+  try {
+    
+    let messagemErroGeral = "Ocorreu um erro ao tentar excluir o serviço!";
+
+    try {
+      let url = 'http://127.0.0.1:5000/agendamento_servico?servico_id=' + id;
+      const response = fetch(url, {
+        method: 'get'
+      }).then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        else
+        {
+          throw new Error(messagemErroGeral);
+        }
+      })
+        .then((responseJson) => {
+          // Do something with the response
+          alert('Já existe agendamento com este servico!');          
+        })
+        .catch((error) => {
+          excluirRegistro(id, div);
+        });
+    }
+    catch (error) {
+      
+        console.log('There was a SyntaxError', error);
+        alert(messagemErroGeral);
+    }
+
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      // Unexpected token < in JSON
+      console.log('There was a SyntaxError', error);
+    } else {
+      console.log('There was an error', error);
+    }
+  }  
+ 
+}
+
+
+/*
+  --------------------------------------------------------------------------------------
+  Função para tentar excluir o registro
+  --------------------------------------------------------------------------------------
+*/
+const excluirRegistro = (id, div) =>{
   const formData = new FormData();
   formData.append('id', id);
   let url = 'http://127.0.0.1:5000/servico';
@@ -163,7 +208,9 @@ const deleteItem = (id) => {
     body: formData
   })
     .then(()=>{
+      alert('Removido com sucesso!');      
       limpar();
+      div.remove();
     })
     .catch((error) => {
       console.error('Error:', error);

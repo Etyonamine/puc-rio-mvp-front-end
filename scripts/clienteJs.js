@@ -82,6 +82,44 @@ function getCliente(nomeCliente)
   return idRetorno;
 }
 /*
+  --------------------------------------------------------------------------------------  
+  Chamada da função para consultar se existe agendamento com o codigo do cliente
+  --------------------------------------------------------------------------------------
+*/
+function existeAgendamento(id) {
+  let url = 'http://127.0.0.1:5000/agendamento_cliente?cliente_id=' + id;
+  let idRetorno = 0;
+  try {
+
+    const response = fetch(url, {
+      method: 'get'
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Something went wrong');
+    })
+      .then((responseJson) => {
+        // Do something with the response
+        alert('Já existe agendamento com este cliente!');
+        return true;
+      })
+      .catch((error) => {
+        return false;
+      });
+  }
+  catch (error) {
+    if (error instanceof SyntaxError) {
+      // Unexpected token < in JSON
+      console.log('There was a SyntaxError', error);
+    } else {
+      console.log('There was an error', error);
+    }
+  }
+}
+
+
+/*
   --------------------------------------------------------------------------------------
   Chamada da função para carregamento inicial dos dados
   --------------------------------------------------------------------------------------
@@ -121,12 +159,10 @@ const removeElement = () => {
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function () {
       let div = this.parentElement.parentElement;
-      const id = div.getElementsByTagName('td')[0].innerHTML
-      if (confirm("Você tem certeza?")) {
-        div.remove();
+      const id = div.getElementsByTagName('td')[0].innerHTML;
 
-        deleteItem(id);
-       
+      if (confirm("Você tem certeza?")) {
+        var remove = deleteItem(id, div);
       }
     }
   }
@@ -151,32 +187,38 @@ const insertButton = (parent) => {
   Função para deletar um item da lista do servidor via requisição DELETE
   --------------------------------------------------------------------------------------
 */
-const deleteItem = async (id) => {  
-  
-  const formData = new FormData();
-  formData.append('id', id);
-  let url = 'http://127.0.0.1:5000/cliente';
-  try{
-    const response = await fetch(url, {
-      method: 'delete',
-      body: formData
+const deleteItem = async (id, div) => {
+  try {
 
-    });
-    const isJson = response.headers.get('content-type')?.includes('application/json');
-    const data = isJson ? await response.json() : null;
+    let idRetorno = 0;
+    try {
+      let url = 'http://127.0.0.1:5000/agendamento_cliente?cliente_id=' + id;
+      const response = fetch(url, {
+        method: 'get'
+      }).then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Something went wrong');
+      })
+        .then((responseJson) => {
+          // Do something with the response
+          alert('Já existe agendamento com este cliente!');          
+        })
+        .catch((error) => {
+          excluirRegistro(id, div);
+        });
+    }
+    catch (error) {
+      if (error instanceof SyntaxError) {
+        // Unexpected token < in JSON
+        console.log('There was a SyntaxError', error);
+      } else {
+        console.log('There was an error', error);
+      }
+    }
 
-    // check for error response
-    if (!response.ok) {
-      // get error message from body or default to response status
-      /* const error = (data && data.message) || response.status;       */
-      const error = response.text();
-      return Promise.reject(error);
-    }else{
-      alert("Removido!");
-      limpar(); 
-    }     
-  }
-  catch{
+  } catch (error) {
     if (error instanceof SyntaxError) {
       // Unexpected token < in JSON
       console.log('There was a SyntaxError', error);
@@ -184,10 +226,41 @@ const deleteItem = async (id) => {
       console.log('There was an error', error);
     }
   }
-  
 }
 
 
+/*
+  --------------------------------------------------------------------------------------
+  Função para colocar um item na lista do servidor via requisição POST
+  --------------------------------------------------------------------------------------
+*/
+const excluirRegistro = (id, div) => {
+  //faz a remoção do cliente
+  const formData = new FormData();
+  formData.append('id', id);
+  let url = 'http://127.0.0.1:5000/cliente';
+  let messagemErroGeral = "Ocorreu algum erro ao tentar excluir o registro!";
+  const response = fetch(url, {
+    method: 'delete',
+    body: formData
+
+  }).then((response) => {
+    if (response.ok) {
+      alert("Removido!");
+      limpar();
+      div.remove();
+    }else{
+      throw new Error(messagemErroGeral);
+    }    
+  })
+    .then((responseJson) => {
+      // Do something with the response
+    
+    })
+    .catch((error) => {      
+      alert(messagemErroGeral);
+    });
+}
 /*
   --------------------------------------------------------------------------------------
   Função para colocar um item na lista do servidor via requisição POST

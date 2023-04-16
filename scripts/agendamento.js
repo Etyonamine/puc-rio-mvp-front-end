@@ -497,7 +497,7 @@ const newItem = () => {
   Função para deletar um item da lista do servidor via requisição DELETE
   --------------------------------------------------------------------------------------
 */
-const deleteItem = (id) => {  
+const deleteItem = async (id) => {  
   
   const formData = new FormData();
   formData.append('id', id);
