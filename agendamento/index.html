@@ -27,39 +27,21 @@
     </div>
     <div id="content">
         <div class="container">
-            <label class="dataHora">
-                Data/Hora: <input type="datetime-local" id="data" required>
-            </label>
-
-            <label class="combos">
-                Cliente:
-                <select id="optCliente" required>
-                    <option value="0"></option>
-                </select>
-            </label>
-
-            <label class="combos">
-                Profissional:
-                <select id="optProfissional" required>
-                    <option value="0"></option>
-                </select>
-            </label>
-
-            <label class="combos">
-                Servi&ccedil;o:
-                <select id="optServico" onchange="getValorServico(this)" required>
-                    <option value="0"></option>
-                </select>
-            </label>
-
-            <label>Valor: <input id="valor" name = "valor" class="campoValor" type="text" readonly value="0"></label>
-
+            <input type="datetime-local" id="data" placeholder="data e hora:">                                       
+            <select id="optCliente" class="combos" >
+                <option value="0" disabled selected hidden>selecione um cliente</option>
+            </select>             
+            <select id="optProfissional" class="combos">
+                <option value="0" disabled selected hidden>selecione um profissional</option>
+            </select>             
+            <select id="optServico"  class="combos" onchange="getValorServico(this)"  >
+                <option value="0" disabled selected hidden>selecione um servi&ccedil;o</option>
+            </select>
+            <input id="valor" name = "valor" class="campoValor" type="text" value="0">
         </div>
         <br />
-        <div class="container">
-            <label  for="observacao">Observa&ccedil;&atilde;o:
-                <textarea class="observacao" id="observacao" name="observacao" maxlength="300"></textarea>
-            </label>            
+        <div class="container">             
+            <textarea class="observacao" id="observacao" name="observacao" maxlength="300" placeholder="observação:"></textarea>                   
         </div>
         <br />
         <div class="container"> 
@@ -92,11 +74,7 @@
     <div>
         <input type="hidden" id="idAgendamento" name="idAgendamento" value="0">
         <input type="hidden" id="indexTabela" name="indexTable" value="0">
-    </div>
-
-    <div id="footer">
-        Eduardo Toshio Yonamine - &copy;Copyrigth 2023</p>
-    </div>
+    </div>  
     <script src="../scripts/agendamento.js"></script>
 </body>
 

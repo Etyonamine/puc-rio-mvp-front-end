@@ -1,6 +1,12 @@
+html, body{
+    position: relative;
+    min-height: 100%;
+}
 body{
     width: 90%;
     margin: 0 auto;
+    overflow-x:hidden;
+    padding: 0;     
 }
 label{
     padding: 3px;
@@ -24,31 +30,24 @@ input + input {
 a{
     padding: 5px;
 }
-#footer{
-    position: fixed;
-    padding: 0.5em 0;
-    bottom: 0;   
-    width: 90%;  
-    margin: 0 auto;
-    font-size: larger;
-    font-weight: bold;
-} 
-
-.column1, .column2, .column3{    
-    width: 31.3%;
+.column1, .column2, .column3, .column4{    
+    width: 24%;
     float: left;
-    margin: 1%;
-    font-size:medium;
+    margin: 0.6%;
+    font-size:auto;
     
 }
-.column3{
+.column1{
+    margin-left: 0%;
+}
+.column4{
     margin-right: 0%;
 }
 .menu{
     display:inline;
 }
 li{
-    list-style: disc;
+    list-style:disc;
     padding: 5px;
 }
 h1{
@@ -85,7 +84,6 @@ h1{
     display: flex;
     justify-content: center;
 }
-
 .close:hover {
     color: #f44336;
     font-weight: bolder;
@@ -152,18 +150,16 @@ tr:hover {
     display: table;
     clear: both;
 }
-
 .campoNome{
     width: 300px;
     font-size: medium;
 }
 .combos{
-    color: black;    
-    width: 200px;
+    font-size: medium;    
+    width: 250px;
 }
 select{
-    width: 200px;
-    font-size: large;
+    width: 200px;    
 }
 textarea{
     width: 65%;
@@ -177,4 +173,5 @@ textarea{
 }
 .observacao{
     width: 75%;
+    
 }

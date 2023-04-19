@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +7,7 @@
     <link rel="stylesheet" href="../css/estilos.css">
     <title>Projeto</title>
 </head>
-
 <body>
-
     <div id="header">
         <h1><img alt="Puc - Rio" src="../img/logoPuc.png">&nbsp; MVP - Curso de Engenharia de Softwares - 2023</h1>
         <h2>Sistema - Agendamento de servi&ccedil;os de clientes - sal&atilde;o de cabelereiro</h2>
@@ -28,7 +25,7 @@
         <div>
             <!-- Opções para adicionar um novo item -->
             <section class="newItem">
-                <input type="text" class="campoNome" id="nome" placeholder="nome:">&nbsp;
+                <input type="text" id="nome" placeholder="nome:">&nbsp;
                 <input type="button" id="btnSalvar" name="btnSalvar" class="addBtn" onclick="salvarItem()"
                     value="Adicionar" />&nbsp;
                 <input type="button" id="btnLimpar" name="btnLimpar" class="addBtn" onclick="limpar()" value="Limpar" />
@@ -54,11 +51,7 @@
     <div>
         <input type="hidden" id="idProfissional" name="idProfissional" value="0">
         <input type="hidden" id="indexTabela" name="indexTabela" value="0">
-    </div>
-    <div id="footer">
-        Eduardo Toshio Yonamine - &copy;Copyrigth 2023</p>
-    </div>
+    </div>    
     <script src="../scripts/profissional.js"></script>
 </body>
-
 </html>
