@@ -224,7 +224,7 @@ const inseriListaAgendamento = (data) => {
   var nomeCliente = data.cliente;
   var nomeProfissional = data.profissional;
   var descricaoServico = data.descricao_servico;
-  var valorServico = data.valor_servico;
+  var valorServico = Number(data.valor_servico).toFixed(2);
   var observacao = data.observacao;
 
   var item = [id, dataAgenda.toLocaleString().replace(',',''),nomeCliente, nomeProfissional, descricaoServico, valorServico, observacao]
@@ -371,7 +371,7 @@ const getValorServico = (id)=>{
  })
    .then((response) => response.json())
    .then((data) => {     
-     document.getElementById("valor").value = data.valor;
+     document.getElementById("valor").value = Number(data.valor).toFixed(2);
    })
    .catch((error) => {
      console.error('Error:', error);
@@ -439,7 +439,7 @@ const getAgendamento = (id) =>{
         document.getElementById('optCliente').value = data.cliente_id;
         document.getElementById('optProfissional').value = data.profissional_id;
         document.getElementById('optServico').value = data.servico_id;
-        document.getElementById('valor').value = data.valor_servico;
+        document.getElementById('valor').value = Number(data.valor_servico).toFixed(2);
         document.getElementById('observacao').value = data.observacao;
 
         document.getElementById('optCliente').disabled  = true;

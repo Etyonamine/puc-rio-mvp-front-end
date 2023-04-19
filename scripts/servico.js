@@ -51,7 +51,7 @@ function getLinha() {
           document.getElementById("descricao").value = cells[i].innerHTML;
         }
         else if (i== 2){
-          document.getElementById("valor").value = cells[i].innerHTML;
+          document.getElementById("valor").value = Number(cells[i].innerHTML).toFixed(2);
         }
       }
       document.getElementById("indexTabela").value =  target.rowIndex;      
@@ -102,7 +102,13 @@ const inseriListaServico = (id, descricao,valor) => {
 
   for (var i = 0; i <= item.length-1; i++) {
     var cel = row.insertCell(i);    
-    cel.textContent = item[i];
+    if (i<2){
+      cel.textContent = item[i];
+    }else{
+      cel.textContent = Number(item[i]).toFixed(2);
+    }
+    
+    
   }
   insertButton(row.insertCell(-1))
   document.getElementById("descricao").value = "";

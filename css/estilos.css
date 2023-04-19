@@ -19,7 +19,7 @@ label{
 } 
 input {
     width: 200px;
-     
+    font-size: 14px;     
 }
 input + input {
     padding: 5px;
@@ -68,7 +68,7 @@ h1{
     background-color: rgb(35, 32, 24);
     color: white;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     transition: 0.3s;
     border-radius: 2px;
@@ -110,7 +110,7 @@ td {
     cursor: pointer;
     position: relative;
     padding: 12px 8px 12px 10px;
-    font-size: 18px;
+    font-size: 14px;
     transition: 0.2s;
     text-align: start;    
 }
@@ -134,8 +134,7 @@ th:nth-child(1){
 
 tr:hover {
     background: rgb(200, 199, 199);
-} 
-
+}  
 .newItem {    
     background-color: #efefef;
     /* padding: 30px 40px;
@@ -144,31 +143,36 @@ tr:hover {
     justify-content: center;
     
 }
-
+.descricao_servico{
+    width:330px;
+}
+.valor_servico{
+    width:100px;
+    text-align: right;
+}
 .newItem:after {
     content: "";
     display: table;
     clear: both;
 }
 .campoNome{
-    width: 300px;
-    font-size: medium;
+    width: 450px;    
 }
-.combos{
-    font-size: medium;    
-    width: 250px;
+.combos{    
+    width: 250px;    
 }
 select{
-    width: 200px;    
+    width: 200px; 
+    font-size: 14px;  
 }
 textarea{
     width: 65%;
     text-align: left;
+    font-size: 14px;
 }
 .campoValor{
     width:100px;
-    color: black;
-    font-size: medium;
+    color: black;    
     text-align: right;
 }
 .observacao{
