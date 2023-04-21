@@ -25,22 +25,22 @@
         </div>
         <h1>Cadastro de agendamentos de clientes</h1>
     </div>
-    <div id="content">
-        <div class="container">
-            <input type="datetime-local" id="data" placeholder="data e hora:">                                       
+    <div id="content" class="container">
+        <section class="newItem">
+            <input type="datetime-local" id="data" placeholder="data e hora:">&nbsp;
             <select id="optCliente" class="combos" >
                 <option value="0" disabled selected hidden>selecione um cliente</option>
-            </select>             
+            </select>&nbsp;             
             <select id="optProfissional" class="combos">
                 <option value="0" disabled selected hidden>selecione um profissional</option>
-            </select>             
+            </select>&nbsp;
             <select id="optServico"  class="combos" onchange="getValorServico(this)"  >
                 <option value="0" disabled selected hidden>selecione um servi&ccedil;o</option>
-            </select>
+            </select>&nbsp;
             <input id="valor" name = "valor" class="campoValor" type="text" value="0">
-        </div>
+        </section>
         <br />
-        <div class="container">             
+        <div class="newItem">             
             <textarea class="observacao" id="observacao" name="observacao" maxlength="300" placeholder="observação:"></textarea>                   
         </div>
         <br />

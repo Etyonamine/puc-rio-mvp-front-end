@@ -23,17 +23,19 @@
     </div>
 
    
-    <div id="content">
+    <div id="content" class="container">
         <div>
             <!-- Opções para adicionar um novo item -->
             <section class="newItem">
                 <input type="text" class="descricao_servico" id="descricao" placeholder="descricao:">&nbsp;
-                <input type="number" class="valor_servico" id="valor" min="0" max="9999,99" step="0.01"  placeholder="valor: 0,00">&nbsp;
-                <input type="button" id="btnSalvar" name="btnSalvar" class="addBtn" onclick="salvarItem()"
-                    value="Adicionar" />&nbsp;
-                <input type="button" id="btnLimpar" name="btnLimpar" class="addBtn" onclick="limpar()" value="Limpar" />
-
+                <input type="number" class="valor_servico" id="valor" min="0" max="9999,99" step="0.01"  placeholder="valor: 0,00">&nbsp;                                
             </section>
+            <br />
+            <div>
+                <input type="button" id="btnSalvar" name="btnSalvar" class="addBtn" onclick="salvarItem()"
+                        value="Adicionar" />&nbsp;
+                <input type="button" id="btnLimpar" name="btnLimpar" class="addBtn" onclick="limpar()" value="Limpar" />
+            </div>
         </div>
         <br />
         <div>
