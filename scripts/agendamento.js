@@ -217,17 +217,18 @@ const getIdServico = (descricao)=>{
 */
 const inseriListaAgendamento = (data) => {
   
-
+  var dataString = data.data_agenda.toLocaleString();
+   
   //recuperando informações do array
   var id = data.agenda_id;
-  var dataAgenda = new Date(data.data_agenda);
+  var dataAgenda = new Date(dataString.replace('GMT',''));
   var nomeCliente = data.cliente;
   var nomeProfissional = data.profissional;
   var descricaoServico = data.descricao_servico;
   var valorServico = Number(data.valor_servico).toFixed(2);
   var observacao = data.observacao;
 
-  var item = [id, dataAgenda.toLocaleString().replace(',',''),nomeCliente, nomeProfissional, descricaoServico, valorServico, observacao]
+  var item = [id, dataAgenda.toLocaleString().replace(',', ' '),nomeCliente, nomeProfissional, descricaoServico, valorServico, observacao]
   var table = document.getElementById('tabelaAgendamento');
   var row = table.insertRow();
 
@@ -527,18 +528,15 @@ const postItem = async () => {
 const putItem = async () => {
   //captura das informacoes
   var id = document.getElementById('idAgendamento').value;
-  var data = new Date(document.getElementById("data").value);
+  var data = formatarDataHora();
   var idCliente = document.getElementById("optCliente").value;
   var idProfissional = document.getElementById("optProfissional").value;
   var idServico = document.getElementById("optServico").value;  
   var observacao = document.getElementById("observacao").value;
-  var dataLocal = data.toLocaleDateString().split('/');
-  var horaLocal = data.toLocaleTimeString();
-  console.log(dataLocal);
-  console.log(horaLocal);
+    
   const formData = new FormData();
   formData.append('id', id);
-  formData.append('data_agenda', dataLocal[2] + '-' + dataLocal[1] + '-' + dataLocal[0]   + ' ' + horaLocal);
+  formData.append('data_agenda', data);
   formData.append('cliente_id', idCliente);
   formData.append('profissional_id', idProfissional);
   formData.append('servico_id', idServico);
@@ -577,7 +575,19 @@ const putItem = async () => {
   }
 }
 
+/*
+  --------------------------------------------------------------------------------------
+  Função para formatar uma data e hora de agendamento
+  --------------------------------------------------------------------------------------
+*/
+function formatarDataHora(){
+  var data = new Date(document.getElementById("data").value);
+  var dataLocal = data.toLocaleDateString().split('/');
+  var horaLocal = data.toLocaleTimeString();
 
+  return  dataLocal[2] + '-' + dataLocal[1] + '-' + dataLocal[0]   + ' ' + horaLocal;
+
+}
 
 /*
  --------------------------------------------------------------------------------------
